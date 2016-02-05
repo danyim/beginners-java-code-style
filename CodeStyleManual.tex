@@ -1,0 +1,306 @@
+% Style Manual for Programming
+% First Edition
+% Created: 07 Oct 2009
+% Last Modified: 07 Oct 2009
+
+\documentclass[11pt,oneside]{article}
+\usepackage{geometry}       % For page margin settings
+\usepackage{multirow}       % For multi-row tabular spanning
+\usepackage[T1]{fontenc}    % For font encoding
+\usepackage{tgbonum}
+\usepackage{titlesec}       % Custom section title headers
+\usepackage{listings}       % Code listing sections
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{graphicx}       % Allows bitmap graphics to be imported
+
+
+\pagestyle{empty}
+\geometry{letterpaper,tmargin=0.5in,bmargin=1in,lmargin=1in,rmargin=1in,headheight=0in,headsep=0in,footskip=.3in}
+
+\setlength{\parindent}{.75cm}
+\setlength{\parskip}{0in}
+\setlength{\itemsep}{0in}
+\setlength{\topsep}{0in}
+\setlength{\tabcolsep}{0in}
+
+
+% Settings for the code blocks
+\lstset{
+    backgroundcolor=\color[rgb]{0.9,0.9,0.9},
+    xleftmargin=10pt,
+    xrightmargin=10pt,
+    tabsize=4,
+    language=Java,
+    upquote=true,
+    captionpos=b,
+    columns=[c]fixed,
+    showstringspaces=false,
+    extendedchars=true,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\ttfamily\small,
+    numbersep=8px,
+    frame=single,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    basicstyle=\small\fontfamily{ppl}\tt,
+    identifierstyle=\ttfamily\small,
+    keywordstyle=\color[rgb]{0,0,1},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+\lstMakeShortInline{|}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Name and contact information
+\newcommand{\articleTitle}{Beyond the Code}
+\newcommand{\subtitle}{A Style Manual for Structured Java Programming}
+\newcommand{\articleAuthor}{By Daniel D. Yim}
+\newcommand{\contact}{for Stephen F. Austin State University}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New commands and environments
+
+% Main header
+% Arg 1: Article Title
+% Arg 2: Article Subtitle
+% Arg 3: Article Author
+% Arg 4: Author's contact
+
+\newcommand{\header}[4]{
+	\begin{center}
+        {\fontsize{32pt}{10pt}\selectfont\scshape\bf#1}\\
+        \vspace{0.6ex}
+        {\fontsize{14pt}{10pt}\selectfont#2}\\
+        \vspace{2.0ex}
+        #3\\
+        %\emph{#4\\}
+    \end{center}
+    \vspace{2.0ex}
+}
+
+%   Custom section headers via the titlesec package
+\titleformat{\section}[block]
+{\fontsize{14pt}{10pt}\selectfont\bfseries}{\thesection.}{1em}{}
+
+%   Custom section headers via the titlesec package
+\titleformat{\subsection}[block]
+{\fontsize{13pt}{10pt}\selectfont\bfseries}{}{0em}{}
+
+
+\newenvironment{articleSection}[1]
+{\begin{list}{}
+         {\setlength{\leftmargin}{1cm}}
+         \item[]
+}
+{\end{list}}
+
+\newenvironment{articleSectionN}[1]
+{#1}
+{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Now for the actual document:
+
+\begin{document}
+    % Sets the font type for the whole page
+\fontfamily{ppl}\selectfont
+
+    % Prints the header
+\header{\articleTitle}{\subtitle}{\articleAuthor}{\contact}
+\hrule
+\vspace{3.0ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Introduction}
+\begin{articleSectionN}
+\qquad Programming with computers is an abstract mental process that anyone is capable of understanding, and with enough experience, the task eventually becomes less of a struggle and more of an intuition. But as we graduate from simply studying the language, the elementary building blocks, such as the syntax, the structures, and the methods that are required fulfill the tasks we need, are no longer relevant to our immediate conscience. By now, they are embedded into our brains out of repeated practice. At this point, we are familiar enough with the language to begin refining what we have learned.
+
+Throughout our education, we are drilled to show the \emph{utility} of the programming language by solving different problems and are judged solely on whether or not the program yields a correct solution at execution. However, we are never held accountable for what lies within the source code and therefore will never be given a proper guideline for structured coding. To address that issue, this manual is written for programmers (particularly Java programmers) of all skill levels to be an advancement towards better programming practices. We will place an emphasis on reinforcing programming habits that will promote writing \emph{clean and structured} code. Through examples we will explore common mistakes and popular programming conventions to ultimately develop a proper coding style.
+
+\vspace{4pt}
+\end{articleSectionN}
+
+
+\section{Organize Code with Proper Spacing}
+\begin{articleSection}{0.5cm}
+    The experienced programmer always keeps an eye on his/her horizontal spacing. By ensuring that we arrange our code according to the scope, we promote readability, which is a quality that is very helpful when we are in the process of debugging or when others view our code.\\
+    \\
+    Let us take a look at the following example:
+    
+    \begin{lstlisting}
+public class Scopes {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 20;
+        if(a < 15) {
+            System.out.println("A is less than 15.");
+            b = b + a;
+            if(b > 25) {
+                System.out.println("B is greater than 25.");
+            }   // end if
+        }
+        else {
+            System.out.println("A is greater than 15.");
+        }   // end if
+    }   // end method main
+}   // end class Scopes
+    \end{lstlisting}
+    Output:
+    \begin{lstlisting}
+A is less than 15.
+B is greater than 25.
+    \end{lstlisting}
+
+    Notice how we enter four scopes in the code above: \lstinline{public class Scopes}, \lstinline{public static void main(String[] args)}, \lstinline{if(a < 15)}, and \lstinline{if(b > 25)}. In lines 2 through 15, we are under the scope of \lstinline{public class Scopes}, so we indent everything once. In lines 3 through 13, we are under the scope of \lstinline{public static void main(String[] args)}, so we must indent everything twice. In lines 6 to 10, we are under the scope of \lstinline{if(a < 15)}, so we must indent three times. And so on.
+    Every time we use a brace ({\tt\{} or {\tt\}}), we see that we either define a scope level or close a scope level.
+   
+    This convention of separating our scope levels promote the idea of having a \emph{structure} in our code that we can easily see and use.
+    
+    \begin{subsection}{An Issue: Tabs and Editors}
+    In most text editors and integrated development environments (such as JCreator), the editor places a flexible-space {\tt TAB} character where there are supposed to be indents. In most cases, this is both intuitive and acceptable; however, in code writing, this can be very problematic.\\
+    \\
+    As we stated before, the {\tt TAB} character is a flexible space, where the actual character size of that space is defined by the editor. This would be no problem if all editors followed a standard, but unfortunately, most do not and are either 4 or 5 spaces.\\
+  \\ 
+    {\bf Programming Convention:} Many programmers eliminate {\tt TAB} character the issue by exclusively using {\bf four spaces} instead.\\
+\\
+    In JCreator, you can change the tab behavior by going to {\bf Configure} on the menu bar and then selecting {\bf Options}. Then, under {\bf Editor}, select {\bf Java} and choose {\bf Insert spaces}. \emph{When working in new environments, it is important that we check to make sure that we are using spaces and not tabs.}\\
+    \\
+    \includegraphics[width=13cm]{fig1.png}
+    \end{subsection}
+    
+\end{articleSection}
+
+
+\section{Use Short but Meaningful Variable Names}
+\begin{articleSection}{0.5cm}
+In Java, variable identifiers are very flexible in terms of naming, but poor programmers deliberately choose to ignore that freedom and continue to use meaningless names. Why should we rely on nondescript identifiers such as x, y, and z to represent complex variables in our programs? As an advanced programmer, one should strive to create {\bf short yet meaningful names} for his/her variables.\\
+\\
+{\bf Programming Convention:} There exist several naming conventions that vary by programming languages; however, for Java, it is considered proper to name variables as such:
+
+\begin{enumerate}
+\item{The first letter should always be lowercase}
+\item{Every "word" of the variable should be capitalized}
+\end{enumerate}
+
+
+A good example of a proper variable identifier is \lstinline{totalTaxRev}. \lstinline{totalTaxRev} is relatively short and very meaningful. (To the programmer who named it, \lstinline{totalTaxRev} is instantly recognizable as "total tax revenue".) \lstinline{totalTaxRev} also follows the two aforementioned naming conventions. \\
+\\
+
+%Recommended reading:
+%\htmladdnormallink{http://java.sun.com/docs/codeconv/html/CodeConventions.doc8.html#367}{http://java.sun.com/docs/codeconv/html/CodeConventions.doc8.html#367}
+%\htmladdnormallink{http://en.wikipedia.org/wiki/Naming_conventions_(programming)}{http://en.wikipedia.org/wiki/Naming_conventions_(programming)}
+\end{articleSection}
+
+
+\section{Embrace Modularity}
+\begin{articleSection}{0.5cm}
+Traversing through a lengthy program can be extremely difficult to an unexperienced eye. However, one practice that can alleviate the confusion is {\bf modularization}. By "modularization", we mean to \emph{separate complex or repetitive tasks from cluttering our simple or unique statements.}\\
+\\
+If we can foresee that we will be executing calculations or a set of statements over multiple times, we can develop that process into a separate method. In other words, we divide the program into many "modules" that, when combined, will execute exactly the same as before--except that the code will look much more manageable to the programmer. As we see in our typical Java programs, there is always at least one method, the \lstinline{public static void main(String[] args)}, but we ask: is that enough? In theory, yes. But in practice, never. In general, having several methods for different (or complex) operations is much easier to parse through than having one unusually long \lstinline{public static void main(String[] args)} method.
+\end{articleSection}
+
+
+\section{Document Descriptively and Uniformly}
+\begin{articleSection}{0.5cm}
+    Documentation can range from a simple comment next to a statement to full-fledged literature covering every detail of a program. However, we are concerned with documenting with consistency. sadfa4g3gOn this topic, the reader has the choice of either naturally developing a documentation style or following an industry standard. 
+    , but try to create a standard that promotes clean, streamlined code.
+    
+For example:
+
+\begin{lstlisting}
+index++; //increment
+\end{lstlisting}
+
+versus\\
+\begin{lstlisting}
+index++;	// Increments the array index by 1
+\end{lstlisting}
+If you're going to go out of your way to document something, make sure it doesn't disturb the readability of the actual code. We see that without proper spacing, the comment in the first example interferes with the flow of the code. Try to separate the two entities.
+
+Daniel's convention: I generally capitalize all my comments and use action verbs, but if the code that I am describing is particularly complex, I opt for a more descriptive "semi-sentence." That is, I use the pronoun "we" in these sentences to convey that both the author and reader are doing a task together.
+I also either use a tab and a comment above the statement I am describing or I tab after the semicolon and insert a comment�only if it's short enough.
+	// Increments the counter by 1
+x++;
+or
+x++;	// Increments the counter by 1
+
+Additionally, I discourage letting any line of my code pass the 80 (horizontal) character mark. Note that Java is particularly friendly towards excess whitespace between statements, so examples such as these are valid:
+
+String str = "Hello guys! This is just an example of how I would essentially "
+		+ " \"cut\" a String in half so that I don't violate my rule about "
+		+ "exceeding 80 horizontal characters.";
+Note: Don't forget the spaces after words or the concatenation operator ('+' in Java).
+\end{articleSection}
+ 
+
+\section{Take advantage of syntax coloring and brace matching}
+\begin{articleSection}{0.5cm}
+    You can always click on an open or close curly brace to see where it is matched to. When you get the compiler error "End of file reached while parsing" it is almost always the case that you are missing a curly brace!
+\end{articleSection}
+    
+    
+\section{List your variable/object declarations near the beginning of the method }
+\begin{articleSection}{0.5cm}
+(Advanced note: this is to follow the Unified Process' UML standard).
+\end{articleSection}
+
+
+\section{Choose one of the two brace habits, but be CONSISTENT (choose one and only one way):}
+\begin{articleSection}{0.5cm}
+if(x > y) {
+	code;
+} else {
+	code;
+}
+
+or 
+
+if(x > y)
+{
+	code;
+} 
+else {
+	code;
+}
+
+Daniel's convention:	I use a mix of the two examples above:
+ if (x < y) {
+	code;
+}
+else {
+	code;
+}
+\end{articleSection}
+
+
+\section{Know that there is always a resource online}
+\begin{articleSection}{0.5cm}
+Although most problems you will encounter will be specific to your program, try to generalize it in a phase and then Google it�you will be amazed at what a few keywords can do for you and your issues. Also note that Java has an API (application programming interface) online that documents what EVERY Java function does.
+\end{articleSection}
+
+
+\section{"When it doubt, print it out!"}
+\begin{articleSection}{0.5cm}
+If your program is being unpredictable or if you're getting a runtime error, try adding simple and informative System.out.println() statements all throughout your program. This will help you see the values that the computer has stored, which may help you fix your code.
+\end{articleSection}
+
+
+\section{Readable code is happy code}
+\begin{articleSection}{0.5cm}
+    Don't try to be clever and clutter your programs with quick fixes here and there. If the situation calls for a proper "remodeling" of the code, then do so by all means. I stress the readability of code because it, first and foremost, helps you as you begin debugging your code and also because a clean, easier to read program is more inviting for outside help.
+    \end{articleSection}
+
+
+\section*{Conclusion}
+\begin{articleSectionN}
+Thoroughly start these all of these good habits on one program and then just start every subsequent program with that template. Soon enough, you'll get used to the extra work and will appreciate how much friendlier your code looks!
+\end{articleSectionN}
+
+
+\end{document}
